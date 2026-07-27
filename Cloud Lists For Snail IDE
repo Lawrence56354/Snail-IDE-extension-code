@@ -1,0 +1,26 @@
+          headers: {
+            'Authorization': `token ${this.token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+      } catch (err) {
+        console.error('Failed to push cloud list:', err);
+      }
+    }
+
+    getCloudItem(args) {
+      const index = Math.floor(args.INDEX) - 1; // Convert 1-indexed Scratch to 0-indexed JS
+      if (index >= 0 && index < this.cachedList.length) {
+        return this.cachedList[index];
+      }
+      return '';
+    }
+
+    getCloudListLength() {
+      return this.cachedList.length;
+    }
+  }
+
+  Scratch.extensions.register(new GitHubCloudLists());
+})(Scratch);
